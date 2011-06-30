@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/6/recipes/sk.recipe.jython/trunk/sk/recipe/jython/testdata
+END
+java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/6/recipes/sk.recipe.jython/trunk/sk/recipe/jython/testdata/java
+END
+jython-fake.jar
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/6/recipes/sk.recipe.jython/trunk/sk/recipe/jython/testdata/jython-fake.jar
+END

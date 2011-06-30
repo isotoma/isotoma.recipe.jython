@@ -1,0 +1,28 @@
+Installation
+============
+
+Since this is a Buildout recipe, there's nothing really to install.  Just
+mention the recipe name in a buildout and enjoy!  For example, your
+``buildout.cfg`` might be something like this::
+
+    [buildout]
+    develop = src/myegg
+    parts =
+        jython
+        myegg
+    [jython]
+    recipe = sk.recipe.jython
+    [myegg]
+    recipe = zc.recipe.egg
+    python = jython
+    interpreter = mypy
+    eggs = myegg
+
+The above buildout accomplishes the following:
+
+* Specifies a Python egg in-development in ``src/myegg``.
+* Downloads and installs Jython.
+* Creates a new interpreter ``bin/mypy`` pre-baked with ``myegg`` and powered
+  by Jython.
+
+Easy!

@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Pseudo "JVM" for sk.recipe.jython functional tests
+# 
+# Copyright 2010 Sean Kelly and contributors.
+# This is licensed software. Please see the LICENSE.txt file for details.
+
+'''Fake Java Virtual Machine that simulates a Jython installer.
+'''
+
+import sys
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    assert len(argv) >= 3
+    assert argv[1] == '-jar'
+    print '"JVM": Jython installer in file "%s"' % argv[2]
+    print '"JVM": Installer options:', argv[3:]
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
