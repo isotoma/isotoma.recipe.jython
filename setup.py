@@ -51,7 +51,7 @@ _longDesc = '\n\n'.join([
     _header,
     _read('README.txt'),
     _read('docs', 'INSTALL.txt'),
-    _read('sk', 'recipe', 'jython', 'README.txt'),
+    _read('isotoma', 'recipe', 'jython', 'README.txt'),
     _read('docs', 'HISTORY.txt'),
 ])
 open('doc.txt', 'w').write(_longDesc)
