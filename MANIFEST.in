@@ -1,0 +1,2 @@
+include docs/*
+include isotoma/recipe/jython/README.txt
