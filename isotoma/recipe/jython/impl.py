@@ -49,6 +49,13 @@ class Recipe(object):
             self.classpaths = [path.strip() for path in options['extra-classpaths'].split('\n')]
         else:
             self.classpaths = None
+            
+        # increasing the java stack size is useful, but only if we really want to do it
+        if options.has_key('java-mem'):
+            self.javamem = options['java-mem']
+        else:
+            self.javamem = None
+            
     def install(self):
         '''Install Jython.'''
         logger = logging.getLogger(self.name)
@@ -69,7 +76,9 @@ class Recipe(object):
         rc = subprocess.call(args)
         if rc != 0:
             raise SystemError('Jython installer return nonzero (%d) status; invoked with %r' % (rc, args))
+
         self.add_class_path_to_script(destination)
+        self.add_java_options_to_script(destination)
         return destination
     def update(self):
         '''Update Jython. No update facility is provided, though.'''
@@ -94,6 +103,22 @@ class Recipe(object):
             jython.seek(0)
             for line in split:
                 jython.write(line + '\n')
-            
+    
+    def add_java_options_to_script(self, jython_location):
+        
+         # don't do this if nothing has been set
+        if not self.javamem:
+            return
+        
+        # get the string to add
+        to_insert = 'export JAVA_MEM="%s"' % self.javamem
+        
+        with open(os.path.join(jython_location, 'jython'), 'r+') as jython:
+            old = jython.read()
+            split = old.split('\n')
+            split.insert(1, to_insert)
+            jython.seek(0)
+            for line in split:
+                jython.write(line + '\n')
             
     # No custom uninstall required
