@@ -56,10 +56,15 @@ class Recipe(object):
         else:
             self.javamem = None
             
+        if options.has_key('exports'):
+            self.exports = dict([x.strip().split(':') for x in options['exports'].split('\n')])
+        else:
+            self.exports = None
+            
     def install(self):
         '''Install Jython.'''
         logger = logging.getLogger(self.name)
-        downloader = Download(self.buildout['buildout'], namespace='sk.recipe.jython', logger=logger)
+        downloader = Download(self.buildout['buildout'], namespace='isotoma.recipe.jython', logger=logger)
         url, md5sum = self.options['url'], self.options['md5sum']
         if len(md5sum) == 0:
             md5sum = None
@@ -79,6 +84,8 @@ class Recipe(object):
 
         self.add_class_path_to_script(destination)
         self.add_java_options_to_script(destination)
+        self.add_custom_exports(destination)
+        
         return destination
     def update(self):
         '''Update Jython. No update facility is provided, though.'''
@@ -120,5 +127,22 @@ class Recipe(object):
             jython.seek(0)
             for line in split:
                 jython.write(line + '\n')
+                
+    def add_custom_exports(self, jython_location):
+    
+        # don't do this if nothing was set
+        if not self.exports:
+            return
+        
+        with open(os.path.join(jython_location, 'jython'), 'r+') as jython:
+            
+            old = jython.read()
+            split = old.split('\n')
+            for export in self.exports:
+                split.insert(1, 'export %(key)s="%(value)s"' % {'key': export.upper(), 'value': self.exports[export]})
+            jython.seek(0)
+            for line in split:
+                jython.write(line + '\n')
+        
             
     # No custom uninstall required
