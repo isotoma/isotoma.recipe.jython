@@ -10,7 +10,7 @@ import os.path
 
 _name = 'isotoma.recipe.jython'
 _desc = 'A recipe for Buildout (zc.buildout) to install Jython'
-_version = '0.0.6'
+_version = '0.0.7'
 _keywords = 'buildout jython installation automation'
 _url, _downloadURL = 'http://github.com/isotoma/isotoma.recipe.jython', ''
 _author, _authorEmail = 'Tom Wardill', 'tom.wardill@isotoma.com'
